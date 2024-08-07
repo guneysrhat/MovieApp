@@ -1,0 +1,43 @@
+.movie-detail {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .movie-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .movie-year {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .movie-plot {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .movie-poster {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
