@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_KEY = '3e9db23a';
-const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}`;
+const API_URL = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}`;
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', async ({ query, year, type, page }: { query: string, year?: string, type?: string, page: number }) => {
   let url = `${API_URL}&s=${query}&page=${page}`;

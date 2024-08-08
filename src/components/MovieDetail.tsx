@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovieById } from '../store/movieSlice';
 import { RootState, AppDispatch } from '../store';
-import { Button, Spin, Alert, Card, Typography, Row, Col } from 'antd';
+import { Button, Spin, Alert, Card, Typography } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
@@ -29,7 +29,7 @@ const MovieDetail: React.FC = () => {
   if (status === 'loading') {
     return (
       <div style={{ textAlign: 'center', padding: '20px' }}>
-        <Spin size="large" />
+        <Spin size="large" style={{ textAlign: 'center' }} />
       </div>
     );
   }

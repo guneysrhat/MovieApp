@@ -32,7 +32,7 @@ const MovieList: React.FC = () => {
     setPage(page);
     dispatch(fetchMovies({ query, page, year, type }));
   };
-console.log(movies)
+
   const columns = [
     {
       title: 'Film Adı',
@@ -70,7 +70,7 @@ console.log(movies)
         onTypeChange={setType} 
       />
       {status === 'loading' ? (
-        <Spin size="large" />
+        <Spin size="large"  />
       ) : error ? (
         <Alert message="Hata" description={error} type="error" showIcon />
       ) : (
@@ -82,7 +82,6 @@ console.log(movies)
             pagination={false}
           />
           <CustomPagination total={50} current={page} onChange={handlePageChange}/>
-         
         </>
       )}
     </>
