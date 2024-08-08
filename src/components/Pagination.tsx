@@ -9,12 +9,16 @@ interface PaginationProps {
 
 const CustomPagination: React.FC<PaginationProps> = ({ total, current, onChange }) => {
   return (
-    <Pagination
+    <div style={{ marginTop: '20px' }}>
+      <Pagination
       total={total}
       current={current}
       pageSize={10}
       onChange={onChange}
+      
     />
+    </div>
+    
   );
 }
 

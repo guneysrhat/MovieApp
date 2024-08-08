@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, Button, Layout, Pagination, Spin, Alert } from 'antd';
+import { Table, Spin, Alert } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies } from '../store/movieSlice';
 import { RootState, AppDispatch } from '../store';
 import { Link } from 'react-router-dom';
-
-const { Header, Content } = Layout;
+import FilterButtons from './FilterButtons';
+import SearchBar from './SearchBar';
+// import Pagination from './Pagination';
+import CustomPagination from './Pagination';
 
 const MovieList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,7 +32,7 @@ const MovieList: React.FC = () => {
     setPage(page);
     dispatch(fetchMovies({ query, page, year, type }));
   };
-
+console.log(movies)
   const columns = [
     {
       title: 'Film Adı',
@@ -46,6 +48,11 @@ const MovieList: React.FC = () => {
       key: 'Year',
     },
     {
+      title: 'Tür',
+      dataIndex: 'Type',
+      key: 'Type',
+    },
+    {
       title: 'IMDb ID',
       dataIndex: 'imdbID',
       key: 'imdbID',
@@ -53,49 +60,32 @@ const MovieList: React.FC = () => {
   ];
 
   return (
-    <Layout className="layout">
-      <Header className="header">
-        <div className="logo">Movie App</div>
-      </Header>
-      <Content style={{ padding: '0 50px', marginTop: '20px' }}>
-        <div className="site-layout-content">
-          <Input.Search
-            placeholder="Film arayın..."
-            onSearch={handleSearch}
-            onChange={(e) => setQuery(e.target.value)}
-            style={{ marginBottom: '20px', width: '300px' }}
+    <>
+      <SearchBar query={query} onSearch={handleSearch} onQueryChange={(e) => setQuery(e.target.value)} />
+      
+      <FilterButtons 
+        selectedYear={year} 
+        selectedType={type} 
+        onYearChange={setYear} 
+        onTypeChange={setType} 
+      />
+      {status === 'loading' ? (
+        <Spin size="large" />
+      ) : error ? (
+        <Alert message="Hata" description={error} type="error" showIcon />
+      ) : (
+        <>
+          <Table
+            dataSource={movies}
+            columns={columns}
+            rowKey="imdbID"
+            pagination={false}
           />
-          <div style={{ marginBottom: '20px' }}>
-            <Button onClick={() => setYear('2022')}>2022</Button>
-            <Button onClick={() => setYear('2021')}>2021</Button>
-            <Button onClick={() => setType('movie')}>Film</Button>
-            <Button onClick={() => setType('series')}>Dizi</Button>
-            <Button onClick={() => setType('episode')}>Bölüm</Button>
-          </div>
-          {status === 'loading' ? (
-            <Spin size="large" />
-          ) : error ? (
-            <Alert message="Hata" description={error} type="error" showIcon />
-          ) : (
-            <>
-              <Table
-                dataSource={movies}
-                columns={columns}
-                rowKey="imdbID"
-                pagination={false}
-              />
-              <Pagination
-                current={page}
-                onChange={handlePageChange}
-                total={movies.length * 10} // example value, you should calculate this based on total results
-                pageSize={10}
-                style={{ marginTop: '20px' }}
-              />
-            </>
-          )}
-        </div>
-      </Content>
-    </Layout>
+          <CustomPagination total={50} current={page} onChange={handlePageChange}/>
+         
+        </>
+      )}
+    </>
   );
 };
 

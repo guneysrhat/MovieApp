@@ -1,27 +1,9 @@
-import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchMovies } from './store/movieSlice';
-import MovieList from './components/MovieList';
-import MovieDetail from './components/MovieDetail';
+import React from 'react';
 import './styles/App.css';
-import { AppDispatch } from './store';
+import AppRouter from './router/AppRouter';
 
 const App: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(fetchMovies({ query: 'Pokemon', page: 1 }));
-  }, [dispatch]);
-
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<MovieList />} />
-        <Route path="/movie/:id" element={<MovieDetail />} />
-      </Routes>
-    </div>
-  );
-}
+  return <AppRouter />;
+};
 
 export default App;

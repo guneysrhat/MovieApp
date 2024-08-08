@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchMovies } from '../store/movieSlice';
-import { AppDispatch } from '../store';
+import React from 'react';
 import { Input } from 'antd';
 
-const { Search } = Input;
+interface SearchBarProps {
+  query: string;
+  onSearch: () => void;
+  onQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const SearchBar: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const [query, setQuery] = useState('Pokemon');
-
-  const handleSearch = (value: string) => {
-    setQuery(value);
-    dispatch(fetchMovies({ query: value, page: 1 }));
-  };
-
+const SearchBar: React.FC<SearchBarProps> = ({ query, onSearch, onQueryChange }) => {
   return (
-    <Search
-      placeholder="Film ara"
-      onSearch={handleSearch}
-      defaultValue="Pokemon"
-    />
+    <div 
+    style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}
+    >
+      <Input.Search
+        placeholder="Film arayın..."
+        value={query}
+        onSearch={onSearch}
+        onChange={onQueryChange}
+        style={{ marginRight: '20px', width: '300px' }}
+      />
+    </div>
   );
 };
 

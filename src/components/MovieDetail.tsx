@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovieById } from '../store/movieSlice';
 import { RootState, AppDispatch } from '../store';
-import { Button, Layout, Spin, Alert } from 'antd';
+import { Button, Spin, Alert, Card, Typography, Row, Col } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
-const { Content } = Layout;
+const { Title, Paragraph } = Typography;
 
 const MovieDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,29 +27,47 @@ const MovieDetail: React.FC = () => {
   };
 
   if (status === 'loading') {
-    return <Spin size="large" />;
+    return (
+      <div style={{ textAlign: 'center', padding: '20px' }}>
+        <Spin size="large" />
+      </div>
+    );
   }
 
   if (error) {
-    return <Alert message="Hata" description={error} type="error" showIcon />;
+    return (
+      <div style={{ textAlign: 'center', padding: '20px' }}>
+        <Alert message="Hata" description={error} type="error" showIcon />
+      </div>
+    );
   }
 
   if (!selectedMovie) {
-    return <div>Film bulunamadı.</div>;
+    return (
+      <div style={{ textAlign: 'center', padding: '20px' }}>
+        <div>Film bulunamadı.</div>
+      </div>
+    );
   }
 
   return (
-    <Layout className="layout">
-      <Content style={{ padding: '0 50px', marginTop: '20px' }}>
-        <Button onClick={handleBack} style={{ marginBottom: '20px' }}>Geri Dön</Button>
-        <div style={{ textAlign: 'center' }}>
-          <h1>{selectedMovie.Title}</h1>
-          <p>{selectedMovie.Year}</p>
-          <p>{selectedMovie.Plot}</p>
-          <img src={selectedMovie.Poster} alt={selectedMovie.Title} style={{ maxWidth: '100%' }} />
-        </div>
-      </Content>
-    </Layout>
+    <div style={{ padding: '20px' }}>
+      <Button
+        onClick={handleBack}
+        icon={<ArrowLeftOutlined />}
+        style={{ marginBottom: '20px', backgroundColor: '#1890ff', color: '#fff', borderColor: '#1890ff' }}
+      >
+        Geri Dön
+      </Button>
+      <Card
+        style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px',display: 'flex', alignItems: 'center' }}
+        cover={<img alt={selectedMovie.Title} src={selectedMovie.Poster} style={{ width: '100%', height: 'auto' }} />}
+      >
+        <Title level={2}>{selectedMovie.Title}</Title>
+        <Paragraph><strong>Yıl:</strong> {selectedMovie.Year}</Paragraph>
+        <Paragraph><strong>Özet:</strong> {selectedMovie.Plot}</Paragraph>
+      </Card>
+    </div>
   );
 };
 
